@@ -8,6 +8,7 @@ class TrashClassificationApi {
     : baseUrl = baseUrl ?? resolveDefaultBaseUrl();
 
   final String baseUrl;
+  static const String _defaultBackendUrl = 'http://192.168.100.249:8000';
 
   static const String _baseUrlOverride = String.fromEnvironment(
     'BACKEND_BASE_URL',
@@ -19,20 +20,7 @@ class TrashClassificationApi {
       return _baseUrlOverride.trim();
     }
 
-    if (kIsWeb) {
-      return 'http://localhost:8000';
-    }
-
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-        return 'http://10.0.2.2:8000';
-      case TargetPlatform.iOS:
-      case TargetPlatform.linux:
-      case TargetPlatform.macOS:
-      case TargetPlatform.windows:
-      case TargetPlatform.fuchsia:
-        return 'http://127.0.0.1:8000';
-    }
+    return _defaultBackendUrl;
   }
 
   Future<TrashClassificationResult> classifyImage(
